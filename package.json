@@ -1,0 +1,19 @@
+{
+  "name": "lovesongs-api",
+  "version": "1.0.0",
+  "description": "Love Songs API para o treinamento GPES",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoniogambogi/LoveSongs-api.git"
+  },
+  "author": "Antonio Gambogi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antoniogambogi/LoveSongs-api/issues"
+  },
+  "homepage": "https://github.com/antoniogambogi/LoveSongs-api#readme"
+}
