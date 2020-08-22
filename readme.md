@@ -5,3 +5,5 @@ Segundo passo: Criar uma nova branch
 
 npm install body-parser cors dotenv express mongoose
 npm install --save-dev nodemon
+
+CRUD = Create, Read, Update, Delete
