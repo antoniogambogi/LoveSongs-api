@@ -26,5 +26,10 @@ app.get('/', (req, res) => {
     res.send({message: `API LoveSongs tocando na porta ${PORT}`})
 })
 
+// Configurando o endpoint * que é retornado quando uma URL requisita não existe.
+app.use('*', (req, res) => {
+    res.send({message: 'API LoveSongs não encontrada!'})
+})
+
 // Iniciando o servidor da API na porta configurada na varíavel de ambiente ou 3000.
 app.listen(PORT, () => console.log(`API LoveSongs tocando na porta ${PORT}`))
