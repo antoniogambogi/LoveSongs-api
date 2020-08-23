@@ -22,6 +22,10 @@ class Musica {
             }
         })
     }
+
+    visualizarUmaMusica(req, res){
+        const nome = req.params.nome
+    }
 }
 
 module.exports = new Musica()
