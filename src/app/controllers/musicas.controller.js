@@ -40,6 +40,7 @@ class Musica {
         })
     }
 
+    // Método para visualizar apenas um dado de acordo com o parâmetro obrigatório especificado na URL
     visualizarUmaMusica(req, res){
         const nome = req.params.musica
 
