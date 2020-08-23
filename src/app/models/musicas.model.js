@@ -4,7 +4,7 @@ const MusicaSchema = new Schema({
     nomeMusica: {
         type: String,
         required: true,
-        maxlength: 20,
+        maxlength: 25,
         trim: true
     },
     nomeBanda: {
@@ -16,13 +16,13 @@ const MusicaSchema = new Schema({
     albumMusica: {
         type: String,
         required: false,
-        maxlength: 14,
+        maxlength: 25,
         trim: true
     },
     generoBanda: {
         type: String,
         required: false,
-        maxlength: 14,
+        maxlength: 40,
         trim: true
     },
     anoMusica: {
