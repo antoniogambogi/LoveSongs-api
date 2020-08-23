@@ -6,5 +6,6 @@ route.post('/criar', Musica.criarMusica)
 route.get('/visualizarTodas', Musica.visualizarMusicas)
 route.get('/visualizarUma/:musica', Musica.visualizarUmaMusica)
 route.put('/atualizarUma/:musica', Musica.atualizarUmaMusica)
+route.delete('/apagarUma/:musica', Musica.apagarUmaMusica)
 
 module.exports = route
