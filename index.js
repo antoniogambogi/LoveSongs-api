@@ -6,6 +6,9 @@ const cors = require('cors')
 const PORT = process.env.PORT || 3000
 const database = require('./src/config/database')
 
+// Importando rotas da aplicação.
+const MusicasRoutes = require('./src/app/routes/musicas.routes')
+
 // Configurando o body parser da API.
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.text())
@@ -25,6 +28,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.send({message: `API LoveSongs tocando na porta ${PORT}`})
 })
+
+app.use('/musicas', MusicasRoutes)
 
 // Configurando o endpoint * que é retornado quando uma URL requisita não existe.
 app.use('*', (req, res) => {
