@@ -12,6 +12,16 @@ class Musica {
             }
         })
     }
+
+    visualizarMusicas(req, res){
+        musicaschema.find({}, (err, data) => {
+            if(err){
+                res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err})
+            }else{
+                res.status(200).send({message: "Todos as músicas foram recuperadas com sucesso", musicas: data})
+            }
+        })
+    }
 }
 
 module.exports = new Musica()
