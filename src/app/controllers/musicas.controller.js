@@ -73,6 +73,18 @@ class Musica {
             }
         })
     }
+
+    apagarUmaMusica(req, res){
+        const nomeDaMusicaParaSerApagada = req.params.musica
+
+        musicaschema.deleteOne({nomeMusica: nomeDaMusicaParaSerApagada}, (err) => {
+            if(err){
+                res.status(500).send({message: "Houve um erro ao apagar uma música", error: err})
+            } else {
+                res.status(200).send({message: `A música ${nomeDaMusicaParaSerApagada} foi apagada com sucesso`})
+            }
+        })
+    }
 }
 
 module.exports = new Musica()
