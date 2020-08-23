@@ -44,7 +44,7 @@ class Musica {
     visualizarUmaMusica(req, res){
         const nome = req.params.musica
 
-        musicaschema.find({nomeMusica: nome}, (err, data) => {
+        musicaschema.findOne({nomeMusica: nome}, (err, data) => {
             if(err){
                 res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err})
             }else{
@@ -52,6 +52,19 @@ class Musica {
             }
         })
     }
+
+    atualizarUmaMusica(req, res){
+        const nome = req.params.musica
+
+        musicaschema.updateOne({nomeMusica: nome}, {$set: req.body}, (err, data) => {
+            if(err){
+                res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err})
+            }else{
+                res.status(200).send({message: `Música ${nome} foi atualizada com sucesso`})
+            }
+        })
+    }
+
 }
 
 module.exports = new Musica()
