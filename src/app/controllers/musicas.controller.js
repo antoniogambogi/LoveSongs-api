@@ -1,5 +1,6 @@
 const musicaschema = require('./../models/musicas.model')
 
+// Função para definir quais campos devem ser buscados ao realizar um find no banco de dados
 function definirCamposDeBusca(campos){
     if(campos == 'musicaGenero'){
         return {nomeMusica: 1, generoBanda: 1}
@@ -11,6 +12,8 @@ function definirCamposDeBusca(campos){
 }
 
 class Musica {
+
+    // Método para inserir um dado no banco de dados
     criarMusica(req, res) {
         const body = req.body
 
@@ -23,6 +26,8 @@ class Musica {
         })
     }
 
+    // Método para visualizar todos os dados do banco de dados, utilizando QueryParams para definir o valor
+    // a serprocessado na função para definir os campos que devem ser buscados
     visualizarMusicas(req, res){
         const campos = req.query.campos
 
