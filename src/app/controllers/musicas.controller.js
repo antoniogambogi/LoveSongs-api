@@ -1,5 +1,15 @@
 const musicaschema = require('./../models/musicas.model')
 
+function definirCamposDeBusca(campos){
+    if(campos == 'musicaGenero'){
+        return {nomeMusica: 1, generoBanda: 1}
+    }else if(campos == 'nomeMusica'){
+        return{nomeMusica: 1}
+    }else{
+        return null
+    }
+}
+
 class Musica {
     criarMusica(req, res) {
         const body = req.body
@@ -14,7 +24,9 @@ class Musica {
     }
 
     visualizarMusicas(req, res){
-        musicaschema.find({}, (err, data) => {
+        const campos = req.query.campos
+
+        musicaschema.find({}, definirCamposDeBusca(campos), (err, data) => {
             if(err){
                 res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err})
             }else{
