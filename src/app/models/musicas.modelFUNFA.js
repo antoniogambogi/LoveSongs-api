@@ -7,20 +7,31 @@ const MusicaSchema = new Schema({
         maxlength: 40,
         trim: true
     },
-    
+    nomeBanda: {
+        type: String,
+        required: true,
+        maxlength: 25,
+        trim: true
+    },
+    albumMusica: {
+        type: String,
+        required: false,
+        maxlength: 25,
+        trim: true
+    },
+    generoBanda: {
+        type: String,
+        required: false,
+        maxlength: 40,
+        trim: true
+    },
     anoMusica: {
         type: Number,
         maxlength: 4,
         minlength: 2,
         required: false
-    },
-
-    nomeBanda: [{
-        type: Schema.Types.ObjectId,
-        ref: 'bandaschema'
-    }]
+    }
 },
-    
     {
        timestamps: true,
        versionKey: false 

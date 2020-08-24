@@ -12,8 +12,35 @@ function definirCamposDeBusca(campos) {
 }
 
 class Musica {
+// alterando a partir daqui
+    visualizarMusicas(req, res) {
+        musicaschema.find({})
+            .populate('bandas')
+            .exec((err, data) => {
+                if (err) {
+                    res.status(500).send({ message: 'Erro ao processar sua requisição', error: err })
+                } else {
+                    res.status(200).send({ message: 'Músicas recuperadas som sucesso', musica: data })
+                }
+            })
+    }
 
-    // Método para inserir um dado no banco de dados
+    visualizarUmaMusica(req, res) {
+        const { name } = req.params
+
+        musicaschema.findOne({ name })
+            .populate('bandas')
+            .exec((err, data) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error processing your request', error: err })
+                } else {
+                    res.status(200).send({ message: `Música ${name} successfully recovered`, musica: data })
+                }
+            })
+    }
+
+
+    // Método para inserir um dado no banco de dados - CÓDIGO CERTO DAQUI PRA BAIXO
     criarMusica(req, res) {
         const body = req.body
 
