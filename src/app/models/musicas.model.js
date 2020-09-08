@@ -1,24 +1,46 @@
 const {Schema, model} = require('mongoose')
 
 const MusicaSchema = new Schema({
-    nomeMusica: {
+    nome: {
         type: String,
         required: true,
+        minlength: 3,
         maxlength: 40,
+        trim: true
+    },
+
+    album: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 25,
         trim: true
     },
     
     anoMusica: {
         type: Number,
-        maxlength: 4,
         minlength: 2,
-        required: false
+        maxlength: 4,
+        trim: true
     },
 
-    nomeBanda: [{
+    letra: {
+        type: String,
+        trim: true
+    },
+
+    video: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    banda: {
         type: Schema.Types.ObjectId,
-        ref: 'bandaschema'
-    }]
+        ref: 'Banda',
+        required: true
+    }
+
 },
     
     {
@@ -26,4 +48,4 @@ const MusicaSchema = new Schema({
        versionKey: false 
     }
 )
-module.exports = model('musicaschema', MusicaSchema)
+module.exports = model('Musica', MusicaSchema)
