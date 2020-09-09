@@ -7,7 +7,8 @@ const PORT = process.env.PORT || 3000
 const database = require('./src/config/database')
 
 // Importando rotas da aplicação.
-const MusicasRoutes = require('./src/app/routes/musicas.routes')
+const MusicaRoutes = require('./src/app/routes/musica.routes')
+const BandaRoutes = require('./src/app/routes/banda.routes')
 
 // Configurando o body parser da API.
 app.use(bodyParser.urlencoded({extended: true}))
@@ -29,7 +30,8 @@ app.get('/', (req, res) => {
     res.send({message: `API LoveSongs tocando na porta ${PORT}`})
 })
 
-app.use('/musicas', MusicasRoutes)
+app.use('/musica', MusicaRoutes)
+app.use('/banda', BandaRoutes)
 
 // Configurando o endpoint * que é retornado quando uma URL requisita não existe.
 app.use('*', (req, res) => {
