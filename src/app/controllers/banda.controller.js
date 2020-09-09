@@ -42,6 +42,18 @@ class Banda {
             })
     }
 
+    criarUmaBanda(req, res){
+        const reqBody = req.body
+
+        banda.create(reqBody, (err, data) => {
+            if(err) {
+                res.status(500).send({message: "Houve um erro ao processar a sua requisição", error, err})
+            } else {
+                res.status(200).send({message: "Banda criada com sucesso", data: data})
+            }
+        })
+    }
+
 }
 
 module.exports = new Banda()
