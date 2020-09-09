@@ -11,7 +11,7 @@ const MusicaSchema = new Schema({
 
     album: {
         type: String,
-        required: true,
+        required: false,
         minlength: 3,
         maxlength: 25,
         trim: true

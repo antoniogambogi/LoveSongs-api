@@ -1,4 +1,5 @@
 const musica = require('./../models/musica.model')
+const banda = require('./../models/banda.model')
 
 class Musica {
 
@@ -27,8 +28,8 @@ class Musica {
     buscarUmaMusicaPeloNome(req, res) {
         const { nomeMusica } = req.params
 
-        if(nomeMusica == undefined || nomeMusica == 'null'){
-            res.status(400).send({message: "O nome da música da música é obrigatório"})
+        if (nomeMusica == undefined || nomeMusica == 'null') {
+            res.status(400).send({ message: "O nome da música da música é obrigatório" })
         }
 
         musica.find({ nome: nomeMusica })
@@ -41,24 +42,37 @@ class Musica {
                         res.status(200).send({ message: "Música não encontrada na base de dados" })
                     } else {
                         res.status(200).send({ message: `A música ${nomeMusica} foi recuperado com sucesso`, data: data })
-                    }                    
+                    }
                 }
             })
     }
 
     // Método para inserir um dado no banco de dados
     criarMusica(req, res) {
-        const body = req.body
+        const reqBody = req.body
+        const idBanda = reqBody['banda']
 
-        musica.create(body, (err, data) => {
+        musica.create(reqBody, (err, musica) => {
             if (err) {
-                res.status(500).send({ message: "Houve um erro ao processar a requisição", error: err })
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
             } else {
-                res.status(201).send({ message: "Música criada com sucesso no banco de dados", musica: data })
+                banda.findById(idBanda, (err, banda) => {
+                    if (err) {
+                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                    } else {
+                        banda.musicas.push(musica)
+                        banda.save({}, (err) => {
+                            if (err) {
+                                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                            } else {
+                                res.status(201).send({ message: "Música criado com sucesso", data: musica })
+                            }
+                        })
+                    }
+                })
             }
         })
     }
 
 }
-
 module.exports = new Musica()
