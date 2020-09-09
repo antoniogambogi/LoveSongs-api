@@ -33,8 +33,6 @@ class Banda {
                 } else {
                     if(data.length <= 0){ 
                         res.status(200).send({message: `A banda ${nomeBanda} não existe no banco de dados`})                
-                    } else if (data['musicas'].length <= 0 ){
-                        res.status(200).send({message: `A banda ${nomeBanda} não possui nenhuma música cadastrada`})
                     } else {
                         res.status(200).send({message: `A banda ${nomeBanda} possui músicas cadastradas`, data: data})
                     }
