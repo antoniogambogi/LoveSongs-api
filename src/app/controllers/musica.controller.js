@@ -32,7 +32,7 @@ class Musica {
             res.status(400).send({ message: "O nome da música da música é obrigatório" })
         }
 
-        musica.find({ nome: nomeMusica })
+        musica.findOne({ nome: nomeMusica })
             .populate('banda', { nome: 1, video: 1 })
             .exec((err, data) => {
                 if (err) {

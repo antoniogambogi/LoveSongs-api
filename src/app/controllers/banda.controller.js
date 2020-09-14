@@ -18,7 +18,7 @@ class Banda {
             })
     }
 
-    buscarAsMusicasDeUmaBandaPeloNomeDela(req, res) {
+    buscarUmaBandaPeloNome(req, res) {
         const { nomeBanda } = req.params
 
         if(nomeBanda == undefined || nomeBanda == 'null'){
