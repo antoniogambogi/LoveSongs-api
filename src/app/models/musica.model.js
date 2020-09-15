@@ -18,7 +18,7 @@ const MusicaSchema = new Schema({
     },
     
     anoMusica: {
-        Date: String,
+        type: Date
     },
 
     letra: {
