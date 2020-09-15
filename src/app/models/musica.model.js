@@ -18,10 +18,7 @@ const MusicaSchema = new Schema({
     },
     
     anoMusica: {
-        type: Number,
-        minlength: 2,
-        maxlength: 4,
-        trim: true
+        Date: String,
     },
 
     letra: {
