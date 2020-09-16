@@ -8,7 +8,7 @@ class Musica {
     buscarTodasAsMusicas(req, res) {
 
         musica.find({})
-            .populate('banda', { nome: 1, video: 1 })
+            .populate('banda', { nome: 1, imagem: 1, genero: 1 })
             .sort({ nome: 1 })
             .exec((err, data) => {
                 if (err) {
@@ -32,8 +32,8 @@ class Musica {
             res.status(400).send({ message: "O nome da música da música é obrigatório" })
         }
 
-        musica.find({ nome: nomeMusica })
-            .populate('banda', { nome: 1, video: 1 })
+        musica.findOne({ nome: nomeMusica })
+            .populate('banda', { nome: 1, imagem: 1, genero: 1 })
             .exec((err, data) => {
                 if (err) {
                     res.status(500).send({ message: "Houve um erro ao processar sua requisição", error: err })

@@ -18,7 +18,7 @@ class Banda {
             })
     }
 
-    buscarAsMusicasDeUmaBandaPeloNomeDela(req, res) {
+    buscarUmaBandaPeloNome(req, res) {
         const { nomeBanda } = req.params
 
         if(nomeBanda == undefined || nomeBanda == 'null'){
@@ -26,7 +26,7 @@ class Banda {
         }
 
         banda.find({ nome: nomeBanda })
-            .populate('musicas', { nome: 1, video: 1 })
+            .populate('musicas', { nome: 1, video: 1, genero:1 })
             .exec((err, data) => {
                 if (err) {
                     res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })

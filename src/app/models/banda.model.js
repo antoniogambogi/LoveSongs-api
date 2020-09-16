@@ -12,7 +12,7 @@ const BandaSchema = new Schema({
     genero: {
         type: String,
         minlength: 3,
-        maxlength: 50,
+        maxlength: 100,
         trim: true
     },
 

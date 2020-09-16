@@ -35,7 +35,7 @@ app.use('/banda', BandaRoutes)
 
 // Configurando o endpoint * que é retornado quando uma URL requisita não existe.
 app.use('*', (req, res) => {
-    res.send({message: 'API LoveSongs não encontrada!'})
+    res.status(404).send({message: 'API LoveSongs não encontrada!'})
 })
 
 // Iniciando o servidor da API na porta configurada na varíavel de ambiente ou 3000.
