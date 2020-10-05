@@ -3,7 +3,7 @@ const banda = require('./../models/banda.model')
 class Banda {
 
     buscarTodasAsBandas(req, res) {
-        banda.find({}, { musicas: 0 })
+        banda.find({})
             .sort({ nome: 1 })
             .exec((err, data) => {
                 if (err) {
