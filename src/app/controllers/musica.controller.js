@@ -90,7 +90,49 @@ class Musica {
         })
     }
 
-    // aqui sera o update de musicas
+    update(req, res) {
+        const { songId } = req.params
+        const reqBody = req.body
+        const bandId = reqBody['banda']
+
+        musica.updateOne({ _id: songId }, { $set: reqBody }, (err, musica) => {
+            if (err) {
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+            } else {
+                banda.findOne({ musicas: songId }, (err, result) => {
+                    if (err) {
+                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                    } else {
+                        if (result['_id'] == bandId) {
+                            res.status(200).send({ message: "A música foi atualizada som sucesso", data: musica })
+                        } else {
+                            result.musicas.pull(songId)
+                            result.save({}, (err) => {
+                                if (err) {
+                                    res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                                } else {
+                                    banda.findById(bandId, (err, banda) => {
+                                        if (err) {
+                                            res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                                        } else {
+                                            banda.musicas.push(songId)
+                                            banda.save({}, (err) => {
+                                                if (err) {
+                                                    res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                                                } else {
+                                                    res.status(200).send({ message: "A música foi atualizada som sucesso", data: musica })
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
 
     delete(req, res) {
         const { songId } = req.params
@@ -103,12 +145,12 @@ class Musica {
                 banda.save((err) => {
                     if (err) {
                         res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
-                    }else{
-                        musica.deleteOne({_id: songId}, (err, result) => {
-                            if(err){
+                    } else {
+                        musica.deleteOne({ _id: songId }, (err, result) => {
+                            if (err) {
                                 res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
-                            }else{
-                                res.status(200).send({message: "A música foi apagada com sucesso", data: result})
+                            } else {
+                                res.status(200).send({ message: "A música foi apagada com sucesso", data: result })
                             }
                         })
                     }
