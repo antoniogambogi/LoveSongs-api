@@ -97,16 +97,16 @@ class Musica {
 
         banda.findOne({ musicas: songId }, (err, banda) => {
             if (err) {
-                res.status(500).send({ message: "Houve um erro ao procfessar a sua requisição", error: err })
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
             } else {
                 banda.musicas.pull(songId)
                 banda.save((err) => {
                     if (err) {
-                        res.status(500).send({ message: "Houve um erro ao procfessar a sua requisição", error: err })
+                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
                     }else{
                         musica.deleteOne({_id: songId}, (err, result) => {
                             if(err){
-                                res.status(500).send({ message: "Houve um erro ao procfessar a sua requisição", error: err })
+                                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
                             }else{
                                 res.status(200).send({message: "A música foi apagada com sucesso", data: result})
                             }
