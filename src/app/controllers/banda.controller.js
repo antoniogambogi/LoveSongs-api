@@ -1,4 +1,5 @@
 const banda = require('./../models/banda.model')
+const musica = require('./../models/musica.model')
 
 class Banda {
 
@@ -71,17 +72,29 @@ class Banda {
     // aqui sera o atualizar uma banda
 
 
-    deleteOne(req, res) {
-        const { bandId } = req.params
+        deleteBand(req, res) {
+            const { bandId } = req.params
 
-        banda.deleteOne({ _id: bandId }, (err) => {
-            if (err) {
-                res.status(500).send({ message: "Houve um erro ao apagar uma banda", error: err })
-            } else {
-                res.status(200).send({ message: `Banda ${bandId} foi apagada com sucesso` })
-            }
-        })
+            banda.findOne({ _id: bandId }, (err, banda) => {
+                if (err) {
+                    res.status(500).send({ message: "Houve um erro ao processo ao processar sua requisição", error: err })
+                } else {
+                    musica.deleteMany({ band: bandId }, (err) => {
+                        if (err) {
+                            res.status(500).send({ message: "Houve um erro ao processo ao processar sua requisição", error: err })
+                        } else {
+                            banda.deleteOne({ _id: bandId }, (err, result) => {
+                                if (err) {
+                                    res.status(500).send({ message: "Houve um erro ao processo ao processar sua requisição", error: err })
+                                } else {
+                                    res.status(200).send({ message: "A banda foi apagada com sucesso", data: result })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
     }
-}
 
 module.exports = new Banda()
