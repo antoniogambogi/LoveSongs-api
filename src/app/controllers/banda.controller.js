@@ -71,14 +71,14 @@ class Banda {
     // aqui sera o atualizar uma banda
 
 
-     apagarNomeBanda(req, res) {
-        const apagarBanda = req.params.nome
+    deleteOne(req, res) {
+        const { bandId } = req.params
 
-        banda.deleteOne({ nome: apagarBanda }, (err) => {
+        banda.deleteOne({ _id: bandId }, (err) => {
             if (err) {
                 res.status(500).send({ message: "Houve um erro ao apagar uma banda", error: err })
             } else {
-                res.status(200).send({ message: `Banda  ${apagarBanda} foi apagada com sucesso` })
+                res.status(200).send({ message: `Banda ${bandId} foi apagada com sucesso` })
             }
         })
     }
