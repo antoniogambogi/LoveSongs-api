@@ -70,28 +70,15 @@ class Banda {
 
     // aqui sera o atualizar uma banda
 
-    delete(req, res) {
-        const { bandId } = req.params
-        const { songId } = req.params
 
-        banda.findOne({ bandas: bandId }, (err, musica) => {
+     apagarNomeBanda(req, res) {
+        const apagarBanda = req.params.nome
+
+        banda.deleteOne({ nome: apagarBanda }, (err) => {
             if (err) {
-                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                res.status(500).send({ message: "Houve um erro ao apagar uma banda", error: err })
             } else {
-                banda.musicas.pull(songId)
-                banda.save((err) => {
-                    if (err) {
-                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
-                    } else {
-                        banda.deleteOne({ _id: bandId }, (err, result) => {
-                            if (err) {
-                                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
-                            } else {
-                                res.status(200).send({ message: "A banda foi apagada com sucesso", data: result })
-                            }
-                        })
-                    }
-                })
+                res.status(200).send({ message: `Banda  ${apagarBanda} foi apagada com sucesso` })
             }
         })
     }
