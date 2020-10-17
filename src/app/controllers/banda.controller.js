@@ -70,6 +70,26 @@ class Banda {
     }
 
     // aqui sera o atualizar uma banda
+    updateBand(req, res) {
+        const { bandId } = req.params
+        const reqBody = req.body
+    
+        banda.updateOne({ _id: bandId }, { $set: reqBody }, (err, result) => {
+          if (err) {
+            res.status(500).send({ message: "Houve um erro ao processar a sua requisição"})
+          } else {
+            if (result.n > 0) {
+              banda.findOne({ _id: bandId }, (err, banda) => {
+                if (err) {
+                  res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                } else {
+                  res.status(200).send({ message: "A banda foi atualizada com sucesso", data: banda })
+                }
+              })
+            }
+          }
+        })
+      }
 
 
         deleteBand(req, res) {

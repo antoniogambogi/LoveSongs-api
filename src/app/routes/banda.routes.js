@@ -6,6 +6,7 @@ route.get('/listarTodas', Banda.buscarTodasAsBandas)
 route.get('/listarUma/:nomeBanda', Banda.buscarUmaBandaPeloNome)
 route.post('/criar', Banda.criarUmaBanda)
 route.get('/validarNomeBanda', Banda.validarNomeBanda)
+route.put('/atualizar/:bandId', Banda.updateBand)
 route.delete('/apagar/:bandId', Banda.deleteBand)
 
 module.exports = route
