@@ -32,7 +32,7 @@ class Banda {
                 if (err) {
                     res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
                 } else {
-                    if (data.length <= 0) {
+                    if (data == null) {
                         res.status(200).send({ message: `A banda ${nomeBanda} não existe no banco de dados` })
                     } else {
                         res.status(200).send({ message: `A banda ${nomeBanda} possui músicas cadastradas`, data: data })
@@ -69,7 +69,6 @@ class Banda {
         })
     }
 
-    // aqui sera o atualizar uma banda
     updateBand(req, res) {
         const { bandId } = req.params
         const reqBody = req.body
@@ -82,7 +81,6 @@ class Banda {
             }
         })
       }
-
 
         deleteBand(req, res) {
             const { bandId } = req.params
