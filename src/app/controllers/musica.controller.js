@@ -74,5 +74,90 @@ class Musica {
         })
     }
 
+    validarNomeMusica(req, res) {
+        const nome = req.query.nome.replace(/%20/g, " ")
+
+        musica.find({ nome: { '$regex': `^${nome}$`, '$options': 'i' } }, (err, result) => {
+            if (err) {
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+            } else {
+                if (result.length > 0) {
+                    res.status(200).send({ message: "Já existe uma música cadastrada com esse nome", data: result.length })
+                } else {
+                    res.status(200).send({ message: "Música disponível", data: result.length })
+                }
+            }
+        })
+    }
+
+    update(req, res) {
+        const { songId } = req.params
+        const reqBody = req.body
+        const bandId = reqBody['banda']
+
+        musica.updateOne({ _id: songId }, { $set: reqBody }, (err, musica) => {
+            if (err) {
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+            } else {
+                banda.findOne({ musicas: songId }, (err, result) => {
+                    if (err) {
+                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                    } else {
+                        if (result['_id'] == bandId) {
+                            res.status(200).send({ message: "A música foi atualizada som sucesso", data: musica })
+                        } else {
+                            result.musicas.pull(songId)
+                            result.save({}, (err) => {
+                                if (err) {
+                                    res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                                } else {
+                                    banda.findById(bandId, (err, banda) => {
+                                        if (err) {
+                                            res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                                        } else {
+                                            banda.musicas.push(songId)
+                                            banda.save({}, (err) => {
+                                                if (err) {
+                                                    res.status(500).send({ message: "Houve um erro ao processar a sua requisição" })
+                                                } else {
+                                                    res.status(200).send({ message: "A música foi atualizada som sucesso", data: musica })
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    delete(req, res) {
+        const { songId } = req.params
+
+        banda.findOne({ musicas: songId }, (err, banda) => {
+            if (err) {
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+            } else {
+                banda.musicas.pull(songId)
+                banda.save((err) => {
+                    if (err) {
+                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                    } else {
+                        musica.deleteOne({ _id: songId }, (err, result) => {
+                            if (err) {
+                                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                            } else {
+                                res.status(200).send({ message: "A música foi apagada com sucesso", data: result })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+
 }
 module.exports = new Musica()
