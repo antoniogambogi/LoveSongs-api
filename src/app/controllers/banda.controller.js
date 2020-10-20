@@ -72,7 +72,7 @@ class Banda {
     updateBand(req, res) {
         const { bandId } = req.params
         const reqBody = req.body
-    
+
         banda.updateOne({ _id: bandId }, { $set: reqBody }, (err, band) => {
             if (err) {
                 res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
@@ -80,31 +80,31 @@ class Banda {
                 res.status(200).send({ message: "banda atualizada com sucesso", data: band })
             }
         })
-      }
-
-        deleteBand(req, res) {
-            const { bandId } = req.params
-
-            banda.findOne({ _id: bandId }, (err, banda) => {
-                if (err) {
-                    res.status(500).send({ message: "Houve um erro ao processo ao processar sua requisição", error: err })
-                } else {
-                    musica.deleteMany({ band: bandId }, (err) => {
-                        if (err) {
-                            res.status(500).send({ message: "Houve um erro ao processo ao processar sua requisição", error: err })
-                        } else {
-                            banda.deleteOne({ _id: bandId }, (err, result) => {
-                                if (err) {
-                                    res.status(500).send({ message: "Houve um erro ao processo ao processar sua requisição", error: err })
-                                } else {
-                                    res.status(200).send({ message: "A banda foi apagada com sucesso", data: result })
-                                }
-                            })
-                        }
-                    })
-                }
-            })
-        }
     }
+
+    deleteBand(req, res) {
+        const { bandId } = req.params;
+
+        banda.findOne({ _id: bandId }, (err) => {
+            if (err) {
+                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+            } else {
+                musica.deleteMany({ banda: bandId }, (err) => {
+                    if (err) {
+                        res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                    } else {
+                        banda.deleteOne({ _id: bandId }, (err, band) => {
+                            if (err) {
+                                res.status(500).send({ message: "Houve um erro ao processar a sua requisição", error: err })
+                            } else {
+                                res.status(200).send({ message: "Banda apagada com sucesso", data: band })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+}
 
 module.exports = new Banda()
